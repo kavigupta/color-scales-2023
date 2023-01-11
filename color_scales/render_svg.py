@@ -72,4 +72,11 @@ def produce_outputs(dem_start, gop_start, green_start):
                 for green in [x for x in proposals[prop] if x.startswith(green_start)]:
                     print(prop, dem, gop, green)
                     for example_map in example_maps:
-                        output(example_map, "dem_gop", prop, dem, gop, green)
+                        output(
+                            example_map,
+                            f"{dem_start}_{gop_start}",
+                            prop,
+                            dem,
+                            gop,
+                            green,
+                        )
