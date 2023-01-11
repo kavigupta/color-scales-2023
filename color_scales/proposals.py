@@ -19,10 +19,12 @@ class proposal_2023_for_hues:
         for k, v in proposal_2022_normalized.hsv.items()
     }
 
-    def __init__(self, hues):
+    def __init__(self, hue_name_mapping):
+        if not isinstance(hue_name_mapping, dict):
+            hue_name_mapping = {h : self.names.get(h, "") for h in hue_name_mapping}
         self.hsv = {
-            self.names.get(h, "")
-            + f" [{h}]": create_for_hue(h, proposal_2022_normalized.hsv)
-            for h in hues
+            hue_name_mapping[h]
+            + f"_{h}": create_for_hue(h, proposal_2022_normalized.hsv)
+            for h in hue_name_mapping
         }
         self.rgb_strings = to_rgb_ramps(self.hsv)
