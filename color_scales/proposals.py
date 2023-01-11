@@ -1,4 +1,4 @@
-from color_scales.extra_ramp import add_extra_to_all
+from color_scales.extra_ramp import add_extra, add_extra_to_all
 from color_scales.interpolate import create_for_hue
 from .utils import hsvs, normalized_hsvs, to_rgb_ramps
 from .data.proposal_2022 import proposal_2022_strings
@@ -38,6 +38,7 @@ class current_pres:
         green_1912_progressive="C7FFAF C6E9AF AADE87 8DD35F 71C837 000000 000000 000000".split(),
         green_1924_progressive="D7F4D7 AFE9AF 73D873 42CA42 30A630 000000 000000 000000".split(),
         orange="FFCCAA FFB380 FF9955 FF7F2A FF6600 D45500 AA4400".split(),
+        yellow="FFEEAA FFE680 FFDC43 F4C200 DAAE00 BE9600".split(),
     )
 
 
@@ -48,6 +49,9 @@ class current_down:
         green="c0f0c0 aae5aa 87de87 5fd35f 37c837 2ca02c 217821 165016".split(),
         orange_socialist="ff8e65 ff7644 f8581e CD3700 973714 622e1b 000000".split(),
         orange_republican="FFDAC1 FFCCA9 FFB580 FF9A50 EE8E50 D69850 B98A35 9D7700".split(),
+        yellow=add_extra("FFEEAA FFDD55 F1C92A DEB02A CE9b1E 000000 000000".split()),
+        cyan_dem="E3F7F7 D0F9F9 ACF2F2 7DDDDD 51C2C2 2AACAC 009696 008080 006666".split(),
+        magenta="FFDCEC FFC5DA FFAACC FF80B2 FF5599 FF2A7F 000000".split(),
     )
 
 
@@ -62,9 +66,12 @@ proposals = dict(
                 25: "orange",
                 90: "green",
                 160: "green",
+                180: "cyan",
                 210: "dem",
                 230: "dem",
                 240: "dem",
+                300: "magenta",
+                336: "magenta",
             }
         ).rgb_strings
     ),
