@@ -1,5 +1,5 @@
 from color_scales.interpolate import create_for_hue
-from .utils import hsvs, normalized_hsvs
+from .utils import hsvs, normalized_hsvs, to_rgb_ramps
 from .data.proposal_2022 import proposal_2022_strings
 
 
@@ -25,3 +25,4 @@ class proposal_2023_for_hues:
             + f" [{h}]": create_for_hue(h, proposal_2022_normalized.hsv)
             for h in hues
         }
+        self.rgb_strings = to_rgb_ramps(self.hsv)

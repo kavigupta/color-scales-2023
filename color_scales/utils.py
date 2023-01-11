@@ -17,3 +17,15 @@ def normalized_hsvs(v):
     v = np.array(v)
     v[:, 0] = np.round(np.mean(v[:, 0]) * 360) / 360
     return v
+
+
+def to_hex(rgb):
+    return "%02x%02x%02x" % tuple((rgb * 255).round().astype(np.uint8))
+
+
+def to_rgb_ramp(hsvs):
+    return [to_hex(rgb) for rgb in colour.HSV_to_RGB(hsvs)]
+
+
+def to_rgb_ramps(ramps):
+    return {k: to_rgb_ramp(v) for k, v in ramps.items()}
