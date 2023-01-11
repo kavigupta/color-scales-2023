@@ -1,6 +1,9 @@
 import os
 import re
 import subprocess
+from permacache import permacache
+from PIL import Image
+
 import tempfile
 from .proposals import current_down, current_pres, proposals
 
@@ -26,7 +29,8 @@ def ramp_fn(ramps, dems, gops, greens):
     rd = {
         **ramp_dict(ramps["dem"], dems),
         **ramp_dict(ramps["gop"], gops),
-        **ramp_dict(ramps["green"], greens),
+        # if not present it shouldn't be necessary
+        **ramp_dict(ramps.get("green", []), greens),
         "BBBBBB": "BBBBBB",
         "808080": "808080",
         "FFFFFF": "FFFFFF",
@@ -34,6 +38,26 @@ def ramp_fn(ramps, dems, gops, greens):
     }
     rd = {k.upper(): v for k, v in rd.items()}
     return lambda x: rd[x.upper()]
+
+
+@permacache("color_scales/render_svg/render_svg_2")
+def render_svg(text):
+    temp_path = tempfile.mktemp(suffix=".svg")
+    temp_png = tempfile.mktemp(suffix=".png")
+
+    with open(temp_path, "w") as f:
+        f.write(text)
+    subprocess.check_call(
+        [
+            "inkscape",
+            "--export-width=2048",
+            "--export-type=png",
+            f"--export-filename={temp_png}",
+            temp_path,
+        ]
+    )
+    with open(temp_png, "rb") as f:
+        return f.read()
 
 
 def output(race, supername, proposal, dem, gop, green="green"):
@@ -45,32 +69,26 @@ def output(race, supername, proposal, dem, gop, green="green"):
     name = f"{proposal}, {dem} vs {gop}"
     text = text.replace("$X", name)
 
-    temp_path = tempfile.mktemp(suffix=".svg")
+    img = render_svg(text)
 
-    with open(temp_path, "w") as f:
-        f.write(text)
     folder = f"images/{supername}/{race['name']}"
     try:
         os.makedirs(folder)
     except FileExistsError:
         pass
-    subprocess.check_call(
-        [
-            "inkscape",
-            "--export-width=2048",
-            "--export-type=png",
-            f"--export-filename={folder}/{name}.png",
-            temp_path,
-        ]
-    )
+
+    with open(f"{folder}/{name}.png", "wb"):
+        f.write(img)
 
 
 def produce_outputs(dem_start, gop_start, green_start):
     for prop in proposals:
-        for dem in [x for x in proposals[prop] if x.startswith(dem_start)]:
-            for gop in [x for x in proposals[prop] if x.startswith(gop_start)]:
-                for green in [x for x in proposals[prop] if x.startswith(green_start)]:
-                    print(prop, dem, gop, green)
+        colors = lambda start: [x for x in proposals[prop] if x.startswith(start)]
+        print(prop, list(proposals[prop]))
+        for dem in colors(dem_start):
+            for gop in colors(gop_start):
+                for green in colors(green_start)[:1]:
+                    print(dem, gop, green)
                     for example_map in example_maps:
                         output(
                             example_map,
