@@ -77,7 +77,7 @@ def output(race, supername, proposal, dem, gop, green="green"):
     except FileExistsError:
         pass
 
-    with open(f"{folder}/{name}.png", "wb"):
+    with open(f"{folder}/{name}.png", "wb") as f:
         f.write(img)
 
 
