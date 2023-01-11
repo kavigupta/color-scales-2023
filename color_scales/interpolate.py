@@ -1,8 +1,5 @@
-
 def create_for_hue(h, from_hues):
-    v = compute_value(
-        h, {v[0][0] * 360: v for v in from_hues.values()}
-    )
+    v = compute_value(h, {v[0][0] * 360: v for v in from_hues.values()})
     v[:, 0] = h / 360
     return v
 
