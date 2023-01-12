@@ -20,12 +20,13 @@ class proposal_2023_for_hues:
         for k, v in proposal_2022_normalized.hsv.items()
     }
 
-    def __init__(self, hue_name_mapping):
+    def __init__(self, hue_name_mapping, attach_hue=True):
         if not isinstance(hue_name_mapping, dict):
             hue_name_mapping = {h: self.names.get(h, "") for h in hue_name_mapping}
         self.hsv = {
-            hue_name_mapping[h]
-            + f"_{h}": create_for_hue(h, proposal_2022_normalized.hsv)
+            hue_name_mapping[h] + f"_{h}"
+            if attach_hue
+            else h: create_for_hue(h, proposal_2022_normalized.hsv)
             for h in hue_name_mapping
         }
         self.rgb_strings = to_rgb_ramps(self.hsv)
@@ -75,4 +76,10 @@ proposals = dict(
             }
         ).rgb_strings
     ),
+)
+
+prop_2023_full = add_extra_to_all(
+    proposal_2023_for_hues(
+        {k: str(k) for k in range(360)}, attach_hue=False
+    ).rgb_strings
 )

@@ -2,11 +2,11 @@ import os
 import re
 import subprocess
 import tempfile
+import numpy as np
 
-import tqdm
 from permacache import permacache
 
-from .proposals import current_down, current_pres, proposals
+from .proposals import current_down, current_pres, proposals, prop_2023_full
 
 example_maps = [
     dict(
@@ -66,8 +66,7 @@ def render_svg(text):
         return f.read()
 
 
-def output(race, supername, proposal, dem, gop, green="green"):
-    p = proposals[proposal]
+def output(race, supername, proposal, p, dem, gop, green="green"):
     fn = ramp_fn(race["baseramp"], p[dem], p[gop], p[green])
     with open(os.path.join("basemaps", race["basemap"]), "r") as f:
         text = f.read()
@@ -99,7 +98,19 @@ def produce_outputs(dem_start, gop_start, green_start):
                             f"{dem_start}_{gop_start}"
                             + ("_" + green_start if green_start != "green" else ""),
                             prop,
+                            proposals[prop],
                             dem,
                             gop,
                             green,
                         )
+
+
+def random_map(seed):
+    for example_map in example_maps:
+        output(
+            example_map,
+            "random",
+            "prop_2023",
+            prop_2023_full,
+            *np.random.RandomState(seed).randint(360, size=3),
+        )
