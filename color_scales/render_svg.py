@@ -88,7 +88,7 @@ def output(race, supername, proposal, dem, gop, green="green"):
 
 
 def produce_outputs(dem_start, gop_start, green_start):
-    for prop in tqdm.tqdm(proposals):
+    for prop in proposals:
         colors = lambda start: [x for x in proposals[prop] if x.startswith(start)]
         for dem in colors(dem_start):
             for gop in colors(gop_start):
