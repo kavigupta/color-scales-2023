@@ -2,7 +2,6 @@ import os
 import re
 import subprocess
 from permacache import permacache
-from PIL import Image
 
 import tempfile
 from .proposals import current_down, current_pres, proposals
@@ -63,7 +62,7 @@ def render_svg(text):
 def output(race, supername, proposal, dem, gop, green="green"):
     p = proposals[proposal]
     fn = ramp_fn(race["baseramp"], p[dem], p[gop], p[green])
-    with open(race["basemap"], "r") as f:
+    with open(os.path.join("basemaps", race["basemap"]), "r") as f:
         text = f.read()
     text = re.sub("fill:#([0-9A-Fa-f]{6})", lambda g: "fill:#" + fn(g.group(1)), text)
     name = f"{proposal}, {dem} vs {gop}"
