@@ -47,7 +47,7 @@ class current_down:
         dem="DFEEFF BDD3FF A5B0FF 7996E2 6674DE 584CDE 3933E5 0D0596".split(),
         gop="FFE0EA FFC8CD FFB2B2 E27F7F D75D5D D72F30 C21B18 A80000".split(),
         green="c0f0c0 aae5aa 87de87 5fd35f 37c837 2ca02c 217821 165016".split(),
-        orange_socialist="ff8e65 ff7644 f8581e CD3700 973714 622e1b 000000".split(),
+        orange_socialist="ff8e65 ff7644 f8581e CD3700 973714 622e1b 000000 000000".split(),
         orange_republican="FFDAC1 FFCCA9 FFB580 FF9A50 EE8E50 D69850 B98A35 9D7700".split(),
         yellow=add_extra("FFEEAA FFDD55 F1C92A DEB02A CE9b1E 000000 000000".split()),
         cyan_dem="E3F7F7 D0F9F9 ACF2F2 7DDDDD 51C2C2 2AACAC 009696 008080 006666".split(),

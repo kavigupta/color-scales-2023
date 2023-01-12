@@ -70,7 +70,7 @@ def output(race, supername, proposal, dem, gop, green="green"):
     with open(os.path.join("basemaps", race["basemap"]), "r") as f:
         text = f.read()
     text = re.sub("fill:#([0-9A-Fa-f]{6})", lambda g: "fill:#" + fn(g.group(1)), text)
-    name = f"{proposal}, {dem} vs {gop}"
+    name = f"{proposal}, {dem} vs {gop}" + (f" vs {green}" if green != "green" else "")
     text = text.replace("$X", name)
 
     img = render_svg(text)
@@ -96,7 +96,8 @@ def produce_outputs(dem_start, gop_start, green_start):
                     for example_map in example_maps:
                         output(
                             example_map,
-                            f"{dem_start}_{gop_start}" + ("_" + green_start if green_start != "green" else ""),
+                            f"{dem_start}_{gop_start}"
+                            + ("_" + green_start if green_start != "green" else ""),
                             prop,
                             dem,
                             gop,
