@@ -17,6 +17,11 @@ example_maps = [
         baseramp=current_down.rgb_strings,
         name="2006 tx gov",
     ),
+    dict(
+        basemap="ga.svg",
+        baseramp=current_down.rgb_strings,
+        name="2020 ga sen special",
+    ),
 ]
 
 
@@ -91,7 +96,7 @@ def produce_outputs(dem_start, gop_start, green_start):
                     for example_map in example_maps:
                         output(
                             example_map,
-                            f"{dem_start}_{gop_start}",
+                            f"{dem_start}_{gop_start}" + ("_" + green_start if green_start != "green" else ""),
                             prop,
                             dem,
                             gop,
