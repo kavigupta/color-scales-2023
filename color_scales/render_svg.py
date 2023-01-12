@@ -1,9 +1,11 @@
 import os
 import re
 import subprocess
+import tempfile
+
+import tqdm
 from permacache import permacache
 
-import tempfile
 from .proposals import current_down, current_pres, proposals
 
 example_maps = [
@@ -86,13 +88,11 @@ def output(race, supername, proposal, dem, gop, green="green"):
 
 
 def produce_outputs(dem_start, gop_start, green_start):
-    for prop in proposals:
+    for prop in tqdm.tqdm(proposals):
         colors = lambda start: [x for x in proposals[prop] if x.startswith(start)]
-        print(prop, list(proposals[prop]))
         for dem in colors(dem_start):
             for gop in colors(gop_start):
                 for green in colors(green_start)[:1]:
-                    print(dem, gop, green)
                     for example_map in example_maps:
                         output(
                             example_map,
