@@ -6,7 +6,7 @@ import numpy as np
 
 from permacache import permacache
 
-from .proposals import current_down, current_pres, proposals, prop_2023_full
+from .proposals import current_down, current_pres, proposals, prop_2023_a_full
 
 example_maps = [
     dict(
@@ -110,7 +110,7 @@ def random_map(seed):
         output(
             example_map,
             "random",
-            "prop_2023",
-            prop_2023_full,
+            "prop_2023_a",
+            prop_2023_a_full,
             *np.random.RandomState(seed).randint(360, size=3),
         )

@@ -14,7 +14,7 @@ class proposal_2022_normalized:
     hsv = {k: normalized_hsvs(v) for k, v in proposal_2022.hsv.items()}
 
 
-class proposal_2023_for_hues:
+class proposal_2023_a_for_hues:
     names = {
         int(360 * normalized_hsvs(v)[:, 0].mean()): k
         for k, v in proposal_2022_normalized.hsv.items()
@@ -60,10 +60,10 @@ proposals = dict(
     current_pres=add_extra_to_all(current_pres.rgb_strings),
     current_down=current_down.rgb_strings,
     prop_2022=add_extra_to_all(proposal_2022.rgb_strings),
-    prop_2023=add_extra_to_all(
-        proposal_2023_for_hues(
+    prop_2023_a=add_extra_to_all(
+        proposal_2023_a_for_hues(
             {
-                **proposal_2023_for_hues.names,
+                **proposal_2023_a_for_hues.names,
                 25: "orange",
                 90: "green",
                 160: "green",
@@ -78,8 +78,8 @@ proposals = dict(
     ),
 )
 
-prop_2023_full = add_extra_to_all(
-    proposal_2023_for_hues(
+prop_2023_a_full = add_extra_to_all(
+    proposal_2023_a_for_hues(
         {k: str(k) for k in range(360)}, attach_hue=False
     ).rgb_strings
 )
